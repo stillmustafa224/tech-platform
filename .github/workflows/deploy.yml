@@ -1,0 +1,47 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install EC2 Instance Connect CLI
+        run: pip install ec2-instance-connect-cli
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+      - name: Deploy via EC2 Instance Connect
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+              -i ~/.ssh/deploy_key \
+              -o ProxyCommand="aws ec2-instance-connect open-tunnel --instance-id ${{ secrets.EC2_INSTANCE_ID }}" \
+              ubuntu@${{ secrets.EC2_PRIVATE_IP }} << 'EOF'
+            cd ~/app
+            git pull origin main
+            docker build -t react-app:latest .
+            docker stop react-app || true
+            docker rm react-app || true
+            docker run -d \
+              --name react-app \
+              --restart unless-stopped \
+              -p 8080:80 \
+              react-app:latest
+          EOF
