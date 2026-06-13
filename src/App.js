@@ -2,22 +2,22 @@ import './App.css';
 import React from 'react';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      resources: []
+        this.state = {
+            resources: []
+        }
+
     }
 
-  }
+    componentDidMount() {
 
-  componentDidMount() {
-  
-    const allResources =  [
+        const allResources = [
             {
                 "Id": "095a6d7f-4893-4a3b-9c35-ff595d4bfa0c",
                 "Name": "208",
-                "State": "Dirty",
+                "State": "filthy",
                 "Data": {
                     "Discriminator": "Space",
                     "Value": {
@@ -135,36 +135,36 @@ class App extends React.Component {
                 }
             }
         ];
-    
 
-    this.setState({ resources: allResources });
-    
-  }
 
-  render() {
-    const { resources } = this.state;
-    { console.log(resources) }
-    return (
-      <div className="App">
-        <header className="App-header">
-        <table className="trial-data">
-          <thead>
-            <tr><th>Room Number</th>
-                <th>Floor Number</th>
-                <th>Room Status</th></tr></thead>
-              <tbody>
-              {resources.map(resource => (
-                      <tr key={resource.Name}><td>{resource.Name}</td>
-                          <td>{resource.Data.Value.FloorNumber}</td>
-                          <td>{resource.State}</td>
-                      </tr>
-                  ))}
-            </tbody>
-          </table>
-        </header>
-      </div>
-    );
-  };
+        this.setState({ resources: allResources });
+
+    }
+
+    render() {
+        const { resources } = this.state;
+        { console.log(resources) }
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <table className="trial-data">
+                        <thead>
+                            <tr><th>Room Number</th>
+                                <th>Floor Number</th>
+                                <th>Room Status</th></tr></thead>
+                        <tbody>
+                            {resources.map(resource => (
+                                <tr key={resource.Name}><td>{resource.Name}</td>
+                                    <td>{resource.Data.Value.FloorNumber}</td>
+                                    <td>{resource.State}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </header>
+            </div>
+        );
+    };
 }
 
 export default App;
