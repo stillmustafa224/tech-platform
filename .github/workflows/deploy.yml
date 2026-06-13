@@ -19,9 +19,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Install EC2 Instance Connect CLI
-        run: pip install ec2-instance-connect-cli
-
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
