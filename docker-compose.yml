@@ -1,0 +1,12 @@
+services:
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_S3_IMAGE_URL: ${REACT_APP_S3_IMAGE_URL}
+    image: react-app:latest
+    container_name: react-app
+    restart: unless-stopped
+    ports:
+      - "8080:80"

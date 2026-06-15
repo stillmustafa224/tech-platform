@@ -5,6 +5,12 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+=======
+
+ARG REACT_APP_S3_IMAGE_URL
+ENV REACT_APP_S3_IMAGE_URL=${REACT_APP_S3_IMAGE_URL}
+
+
 COPY package*.json ./
 RUN npm ci --omit=dev
 
