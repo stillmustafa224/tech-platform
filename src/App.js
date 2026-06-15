@@ -143,10 +143,22 @@ class App extends React.Component {
 
     render() {
         const { resources } = this.state;
-        { console.log(resources) }
+        const imageUrl = process.env.REACT_APP_S3_IMAGE_URL ||
+            (process.env.REACT_APP_S3_BUCKET_URL && process.env.REACT_APP_S3_IMAGE_KEY
+                ? `${process.env.REACT_APP_S3_BUCKET_URL.replace(/\/+$/, '')}/${process.env.REACT_APP_S3_IMAGE_KEY.replace(/^\/+/, '')}`
+                : null);
+
         return (
             <div className="App">
                 <header className="App-header">
+                    {imageUrl && (
+                        <img
+                            className="s3-banner"
+                            src={imageUrl}
+                            alt="S3 banner"
+                            style={{ maxWidth: '90%', height: 'auto', marginBottom: '24px' }}
+                        />
+                    )}
                     <table className="trial-data">
                         <thead>
                             <tr><th>Room Number</th>
