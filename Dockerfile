@@ -1,23 +1,23 @@
-# Stage 1: Build the React application
-FROM node:18-alpine AS builder
+# syntax=docker/dockerfile:1
 
-WORKDIR /usr/src/app
+# ── Stage 1: Build ────────────────────────────────────────────────
+FROM node:20-alpine AS builder
 
-# Copy package files and install dependencies
+WORKDIR /app
+
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --omit=dev
 
-# Copy the rest of the application source code
 COPY . .
-
-# Build the production application
 RUN npm run build
 
-# Stage 2: Serve the application using Nginx
-FROM nginx:1.25-alpine
 
-# Copy the built files from the builder stage
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+# ── Stage 2: Serve ────────────────────────────────────────────────
+FROM nginx:stable-alpine AS runner
+
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY --from=builder /app/build /usr/share/nginx/html
 
 EXPOSE 80
 
