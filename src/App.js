@@ -17,7 +17,7 @@ class App extends React.Component {
             {
                 "Id": "095a6d7f-4893-4a3b-9c35-ff595d4bfa0c",
                 "Name": "208",
-                "State": "filthy",
+                "State": "dead",
                 "Data": {
                     "Discriminator": "Space",
                     "Value": {
