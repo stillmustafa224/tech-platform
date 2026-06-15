@@ -12,6 +12,8 @@ You can use whichever cloud service you feel appropriate to host it. Our cloud p
 * **Stage 1 (Native Baseline):** Provision your cloud Virtual Server within a private environment with explicit ingress and egress control. Configure the runtime environment manually and run the provided application natively on the host instance.
 * **Stage 2 (Container Migration):** Note that all container files have been stripped from this repository. You must write an optimized multi-stage `Dockerfile` from scratch, package the application, and re-deploy it to your host environment as a containerized workload.
 * Create a readable and maintainable solution that is easy to understand by an audience of your peers.
+* **Stage 3** Add object storage to the infra and configure it with the application.
+* **Stage 4** Discover docker-compose and try to implement it with an appropriate approach to handel environment variables during the build phase of your container.
 
 If you have time, consider implementing these features:
 * A load balancing solution
