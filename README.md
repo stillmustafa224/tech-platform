@@ -1,4 +1,3 @@
-**Note:** We're more interested in how you approach the problem and implement your solution than in you finding a “correct” answer to the question.
 
 ## The task - Deploying & migrating a workload
 
